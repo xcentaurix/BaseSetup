@@ -1,0 +1,6 @@
+Description: BaseSetup
+Maintainer: xcentaurix
+Package: enigma2-plugin-extensions-basesetup
+Version: 0.1.29
+Architecture: all
+Depends: samba

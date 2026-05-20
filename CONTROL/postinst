@@ -1,0 +1,34 @@
+#!/bin/sh
+
+mv /etc/samba/smb.conf.new /etc/samba/smb.conf
+mv /etc/samba/smb-local.conf.new /etc/samba/smb-local.conf
+
+smbd restart
+nmbd restart
+
+echo -e "\n\n" | smbpasswd
+
+echo backing up Task.pyc...
+Task="/usr/lib/enigma2/python/Components/Task"
+if [ ! -f $Task.pyc.org ]; then
+	cp $Task.pyc $Task.pyc.org
+fi
+
+echo creating picon link...
+if [ -d /usr/share/enigma2/picon ]; then
+	rm -rf /usr/share/enigma2/picon
+fi
+ln -s /media/usb/picon /usr/share/enigma2/picon
+
+cp /usr/lib/enigma2/python/Plugins/Extensions/BaseSetup/spinner/*.png /usr/share/enigma2/spinner/.
+cp /usr/lib/enigma2/python/Plugins/Extensions/BaseSetup/spinner.org/*.png /usr/share/enigma2/spinner.org/.
+
+echo "***********************************"
+echo "*           BaseSetup             *"
+echo "*               by                *"
+echo "*          xcentaurix             *"
+echo "***********************************"
+echo ""
+echo "Plugin installed successfully."
+echo ""
+exit 0

@@ -1,0 +1,92 @@
+# Fixed Samba configuration for VU+ Zero
+# This configuration provides both guest access and user authentication options
+
+[global]
+        # Server settings
+        workgroup = WORKGROUP
+        server string = VU+ Zero Samba Server
+        
+        # Authentication - Choose ONE of the following methods:
+        
+        # METHOD 1: Guest access only (simplest, less secure)
+        security = user
+        map to guest = Bad User
+        guest account = root
+        
+        # METHOD 2: User authentication (more secure)
+        # Uncomment these lines and comment the ones above if you want user auth
+        # security = user
+        # map to guest = never
+        # encrypt passwords = yes
+        
+        # Performance and compatibility settings
+        socket options = TCP_NODELAY IPTOS_LOWDELAY SO_RCVBUF=65536 SO_SNDBUF=65536
+        max protocol = SMB3
+        min protocol = SMB2
+        
+        # Logging
+        log level = 1
+        max log size = 50
+
+# Root share with guest access
+[Root]
+        comment = Everything - take care!
+        path = /
+        # Guest access settings
+        guest ok = yes
+        public = yes
+        writable = yes
+        read only = no
+        # Permissions
+        create mask = 0755
+        directory mask = 0755
+        # Force user/group for file operations
+        force user = root
+        force group = root
+        # Browseable
+        browseable = yes
+
+# Hard disk share
+[Harddisk]
+        comment = The harddisk
+        path = /media/hdd
+        # Guest access settings
+        guest ok = yes
+        public = yes
+        writable = yes
+        read only = no
+        # Permissions
+        create mask = 0755
+        directory mask = 0755
+        # Force user/group for file operations
+        force user = root
+        force group = root
+        # Browseable
+        browseable = yes
+
+# Additional useful shares
+[tmp]
+        comment = Temporary files
+        path = /tmp
+        guest ok = yes
+        public = yes
+        writable = yes
+        read only = no
+        create mask = 0777
+        directory mask = 0777
+        force user = root
+        force group = root
+        browseable = yes
+
+[recordings]
+        comment = Recordings directory
+        path = /media/hdd/movie
+        guest ok = yes
+        public = yes
+        writable = yes
+        read only = no
+        create mask = 0755
+        directory mask = 0755
+        force user = root
+        force group = root
+        browseable = yes

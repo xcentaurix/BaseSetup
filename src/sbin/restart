@@ -1,0 +1,4 @@
+rm /home/root/logs/*
+init 2
+sleep 1
+init 3

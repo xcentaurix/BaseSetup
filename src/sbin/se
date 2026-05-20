@@ -1,0 +1,2 @@
+#!/bin/sh
+vi /etc/enigma2/settings

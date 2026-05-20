@@ -1,0 +1,26 @@
+#!/bin/bash
+rm /home/root/logs/*
+
+echo "Continuously checking for package updates..."
+
+while true; do
+    echo "Running opkg update..."
+    opkg update
+
+    echo "Running opkg upgrade..."
+    upgrade_output=$(opkg upgrade 2>&1)
+    echo "$upgrade_output"
+
+    # Check if any packages were upgraded
+    if echo "$upgrade_output" | grep -q "Upgrading"; then
+        echo ""
+        echo "Package(s) were upgraded. Restarting Enigma2..."
+        echo ""
+        restart
+        exit
+    else
+        echo ""
+        echo "No packages to upgrade. Waiting 5 seconds before checking again..."
+        sleep 5
+    fi
+done
